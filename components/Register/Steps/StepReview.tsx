@@ -1,5 +1,5 @@
 // components/steps/StepReview.tsx
-import ReviewRow from "../Register/ReviewRow";
+import ReviewRow from "../ReviewRow";
 import { FormData } from "@/types/registerTypes";
 
 interface Props {

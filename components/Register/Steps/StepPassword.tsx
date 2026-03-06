@@ -1,7 +1,8 @@
-// components/steps/StepPassword.tsx
-import Label from "../Register/Label";
-import Input from "../Register/Input";
+import { useState } from "react"; // 1. Import useState
+import Label from "../Label";
+import Input from "../Input";
 import { FormData } from "@/types/registerTypes";
+import EyeIcon from "@/components/Login/EyeIcon";
 
 interface Props {
   form: FormData;
@@ -10,6 +11,10 @@ interface Props {
 }
 
 export default function StepPassword({ form, errors, set }: Props) {
+  // 3. State to toggle visibility
+  const [showPass, setShowPass] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const getStrength = () => {
     const { password } = form;
     if (!password) return 0;
@@ -32,22 +37,43 @@ export default function StepPassword({ form, errors, set }: Props) {
       <h2 className="text-sm font-semibold text-white mb-5">
         Set Admin Password
       </h2>
+      
       <Label>Password *</Label>
-      <Input
-        type="password"
-        placeholder="Minimum 8 characters"
-        value={form.password}
-        onChange={(e) => set("password", e.target.value)}
-        error={errors.password}
-      />
+      <div className="relative">
+        <Input
+          type={showPass ? "text" : "password"} // 4. Toggle type
+          placeholder="Minimum 8 characters"
+          value={form.password}
+          onChange={(e) => set("password", e.target.value)}
+          error={errors.password}
+        />
+        <button
+          type="button"
+          onClick={() => setShowPass(!showPass)}
+          className="absolute right-3 top-3 text-slate-400 hover:text-white transition-colors"
+        >
+          <EyeIcon open={showPass} />
+        </button>
+      </div>
+
       <Label>Confirm Password *</Label>
-      <Input
-        type="password"
-        placeholder="Repeat password"
-        value={form.confirmPassword}
-        onChange={(e) => set("confirmPassword", e.target.value)}
-        error={errors.confirmPassword}
-      />
+      <div className="relative">
+        <Input
+          type={showConfirm ? "text" : "password"} // 5. Toggle type
+          placeholder="Repeat password"
+          value={form.confirmPassword}
+          onChange={(e) => set("confirmPassword", e.target.value)}
+          error={errors.confirmPassword}
+        />
+        <button
+          type="button"
+          onClick={() => setShowConfirm(!showConfirm)}
+          className="absolute right-3 top-3 text-slate-400 hover:text-white transition-colors"
+        >
+          <EyeIcon open={showConfirm} />
+        </button>
+      </div>
+
       {form.password && (
         <div className="mt-1 mb-4">
           <div className="flex gap-1">

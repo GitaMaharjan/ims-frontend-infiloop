@@ -1,5 +1,6 @@
 // components/Login/LoginForm.tsx
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import EyeIcon from "./EyeIcon";
@@ -7,6 +8,7 @@ import Spinner from "./Spinner";
 import RoleSelector from "./RoleSelector";
 import { UserRole } from "@/types/loginTypes";
 import { loginUser } from "@/services/loginApi";
+import Link from "next/link";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -50,7 +52,7 @@ export default function LoginForm() {
       const userRole = data.user?.role;
       if (userRole === "ORG_ADMIN") router.push("/dashboard");
       else if (userRole === "STAFF") router.push("/warehouse");
-      else router.push("/");
+      else router.push("/dashboard");
     } catch {
       setError("Network error. Please check your connection.");
     } finally {
@@ -59,16 +61,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-sm">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white tracking-tight mb-1">
-          Welcome back
-        </h1>
-        <p className="text-slate-500 text-sm">
-          Sign in to your inventory workspace
-        </p>
-      </div>
-
+    <>
       <RoleSelector
         role={role}
         setRole={(r) => {
@@ -178,12 +171,12 @@ export default function LoginForm() {
       {role === "ORG_ADMIN" && (
         <p className="mt-5 text-center text-slate-600 text-xs">
           New organization?{" "}
-          <a
-            href="/register"
+          <Link
+            href="/auth/register"
             className="text-indigo-400 hover:text-indigo-300 transition-colors"
           >
             Register here
-          </a>
+          </Link>
         </p>
       )}
 
@@ -192,6 +185,6 @@ export default function LoginForm() {
           Staff accounts are created by your Org Admin.
         </p>
       )}
-    </div>
+    </>
   );
 }

@@ -15,9 +15,6 @@ export async function checkOrgName(name: string): Promise<boolean> {
 
     const data = await res.json();
     return data.exists as boolean;
-
-
-
 }
 
 export async function checkEmail(email: string): Promise<boolean> {

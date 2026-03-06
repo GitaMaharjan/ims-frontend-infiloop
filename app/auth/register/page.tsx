@@ -3,13 +3,19 @@
 import { useState, useCallback } from "react";
 
 import { FormData } from "@/types/registerTypes";
-import { checkEmail, checkOrgName, registerOrganization } from "@/services/registerApi";
-import StepAdmin from "@/components/Steps/StepAdmin";
-import StepOrganization from "@/components/Steps/StepOrganization";
-import StepPassword from "@/components/Steps/StepPassword";
-import StepReview from "@/components/Steps/StepReview";
+import {
+  checkEmail,
+  checkOrgName,
+  registerOrganization,
+} from "@/services/registerApi";
+import StepAdmin from "@/components/Register/Steps/StepAdmin";
+import StepOrganization from "@/components/Register/Steps/StepOrganization";
+import StepPassword from "@/components/Register/Steps/StepPassword";
+import StepReview from "@/components/Register/Steps/StepReview";
 import StepBar from "@/components/Register/StepBar";
 import Spinner from "@/components/Register/Spinner";
+import { RegistrationSuccess } from "@/components/Register/RegistrationSuccess";
+import Link from "next/link";
 
 type StepStatus = "idle" | "checking" | "error" | "ok";
 
@@ -101,41 +107,7 @@ export default function RegisterPage() {
   };
 
   if (success) {
-    return (
-      <div className="min-h-screen bg-[#080b12] flex items-center justify-center p-4">
-        <div className="w-full max-w-md text-center">
-          <div className="w-16 h-16 rounded-full bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center mx-auto mb-5">
-            <svg
-              className="w-8 h-8 text-indigo-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          </div>
-          <h2 className="text-xl font-semibold text-white mb-2">
-            Registration Submitted
-          </h2>
-          <p className="text-slate-400 text-sm leading-relaxed mb-6">
-            Your organization has been registered successfully. A system
-            administrator will review and approve your account. You will be able
-            to log in once approved.
-          </p>
-          <a
-            href="/login"
-            className="inline-block text-sm text-indigo-400 border border-indigo-500/30 rounded-lg px-5 py-2.5 hover:bg-indigo-500/10 transition-colors"
-          >
-            Back to Login
-          </a>
-        </div>
-      </div>
-    );
+    return <RegistrationSuccess />;
   }
 
   const StepComponents = [
@@ -148,36 +120,17 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-[#080b12] flex items-center justify-center p-4 font-mono">
-      <div
-        className="fixed inset-0 pointer-events-none opacity-[0.025]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(99,102,241,1) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,1) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
+   
       <div className="w-full max-w-lg relative z-10">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 flex flex-col items-center text-center">
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-7 h-7 rounded bg-indigo-500 flex items-center justify-center">
-              <svg
-                className="w-4 h-4 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"
-                />
-              </svg>
-            </div>
-            <span className="text-white font-semibold tracking-tight text-sm">
+            <Link
+              href="/"
+              className="text-white font-semibold tracking-tight text-sm hover:text-white"
+            >
               IMS
-            </span>
+            </Link>
           </div>
           <h1 className="text-2xl font-bold text-white tracking-tight">
             Register Organization

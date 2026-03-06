@@ -1,6 +1,6 @@
 // components/steps/StepOrganization.tsx
-import Label from "../Register/Label";
-import Input from "../Register/Input";
+import Label from "../Label";
+import Input from "../Input";
 import { FormData } from "@/types/registerTypes";
 
 interface Props {
